@@ -3,7 +3,7 @@ exports.up = function (knex) {
   return knex.schema
     .createTable('user', tbl => {
       tbl.increments()
-      tbl.int('type').notNullable().unsigned()
+      tbl.integer('type').notNullable().unsigned()
       tbl.text('name', 128).notNullable()
       tbl.text('email', 128).notNullable().unique()
       tbl.text('phone', 128).unique()
