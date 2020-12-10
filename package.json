@@ -1,0 +1,31 @@
+{
+  "name": "back-end",
+  "version": "1.0.0",
+  "description": "Database and api for Share app",
+  "main": "index.js",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "env": "^0.0.2",
+    "express": "^4.17.1",
+    "helmet": "^4.2.0",
+    "knex": "^0.21.12",
+    "knex-cleaner": "^1.3.1",
+    "node": "^15.3.0",
+    "nodemon": "^2.0.6",
+    "sqlite3": "^5.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RococoCoding/share-back-end.git"
+  },
+  "author": "Rococo Code",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RococoCoding/share-back-end/issues"
+  },
+  "homepage": "https://github.com/RococoCoding/share-back-end#readme"
+}
