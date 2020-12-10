@@ -25,10 +25,10 @@ exports.up = function (knex) {
     //junctions
     .createTable('user_inventory', tbl => {
       tbl.integer('item_id').unsigned().notNullable()
-        .references('id').inTable('location')
+        .references('id').inTable('item')
         .onUpdate('CASCADE').onDelete('CASCADE')
       tbl.integer('user_id').unsigned().notNullable()
-        .references('id').inTable('location')
+        .references('id').inTable('user')
         .onUpdate('CASCADE').onDelete('CASCADE')
 
       tbl.float('item_qty').unsigned().defaultTo(0).notNullable()
@@ -41,7 +41,7 @@ exports.up = function (knex) {
         .references('id').inTable('location')
         .onUpdate('CASCADE').onDelete('CASCADE')
       tbl.integer('user_id').unsigned().notNullable()
-        .references('id').inTable('location')
+        .references('id').inTable('user')
         .onUpdate('CASCADE').onDelete('CASCADE')
 
       tbl.primary(['user_id', 'location_id']);
@@ -54,7 +54,7 @@ exports.up = function (knex) {
       .references('id').inTable('user')
       .onUpdate('CASCADE').onDelete('CASCADE')
 
-      tbl.primary(['user_id', 'follower_id']);
+      tbl.primary(['user_id', 'user_id']);
     })
 };
 
