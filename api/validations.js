@@ -6,6 +6,8 @@ module.exports = {
   validateUser,
   protected,
   modsOnly,
+  selfOnly,
+  modsOrSelf
 }
 
 function protected(req, res, next) {
@@ -18,8 +20,24 @@ function protected(req, res, next) {
   })
 }
 
+function selfOnly(req, res, next) {
+  if (res.token.subject == req.params.id) {
+    next();
+  } else {
+    res.status(401).json(`You are not authorized.`);
+  }
+}
+
+function modsOrSelf(req, res, next) {
+  if (res.token.type == 1 || res.token.subject == req.params.id) {
+    next();
+  } else {
+    res.status(401).json(`You are not authorized.`);
+  }
+}
+
 function modsOnly(req, res, next) {
-  if (res.token.type === 1) {
+  if (res.token.type == 1) {
     next();
   } else {
     res.status(401).json(`You are not authorized.`);

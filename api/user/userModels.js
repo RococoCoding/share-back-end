@@ -3,7 +3,9 @@ const db = require('../../data/dbconfig');
 module.exports = {
   getUserById,
   getUserByEmail,
-  saveUser
+  saveUser,
+  deleteUser,
+  updateUser
 }
 
 function getUserById(id) {
@@ -53,5 +55,32 @@ function saveUser(body) {
     .insert(body)
     .then(id => {
       return getUserById(id);
+    })
+}
+
+function deleteUser(id) {
+  const deletedUser = getUserById(id);
+  return db('user')
+    .where({id})
+    .del()
+    .then(data => {
+      if (!data) {
+        return Promise.resolve(null)
+      } else {
+        return Promise.resolve(deletedUser);
+      }
+    })
+}
+
+function updateUser(id, body) {
+  return db('user')
+    .where({id})
+    .update(body)
+    .then(data => {
+      if (!data) {
+        return Promise.resolve(null)
+      } else {
+        return getUserById(id);
+      }
     })
 }

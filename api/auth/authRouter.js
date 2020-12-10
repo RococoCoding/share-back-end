@@ -27,13 +27,13 @@ router.post('/register', findUser, (req, res) => {
 });
 
 router.get('/login', findUser, (req, res) => {
-  const user = res.user[0]
-  if (!user) {
+  if (!res.user) {
     res.status(404).json({ error: `No account with that email was found.` })
   }
-  else if (!bcrypt.compareSync(req.body.password, user.password)) {
+  else if (!bcrypt.compareSync(req.body.password, res.user[0].password)) {
     res.status(401).json({ error: 'Incorrect password.' });
   } else {
+    const user = res.user[0];
     const token = generateToken(user);
     res.status(200).json({ token: token, id: user.id, type: user.type});
   }
