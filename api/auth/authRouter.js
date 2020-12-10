@@ -35,12 +35,12 @@ router.get('/login', findUser, (req, res) => {
     res.status(401).json({ error: 'Incorrect password.' });
   } else {
     const token = generateToken(user);
-    res.status(200).json({ token: token, user: user });
+    res.status(200).json({ token: token, id: user.id, type: user.type});
   }
 });
 
 function findUser(req, res, next) {
-  getUserByEmail(req.body.email)
+  getUserByEmail(req.body.email, true)
     .then(data => {
       res.user = data;
       next();
@@ -54,6 +54,8 @@ function findUser(req, res, next) {
 function generateToken(user) {
   const payload = {
     subject: user.id,
+    type: user.type,
+    email: user.email,
     iat: Date.now()
   }
   const options = {
@@ -61,5 +63,6 @@ function generateToken(user) {
   }
   // extract the secret away so it can be required and used where needed
   return jwt.sign(payload, secrets.jwtSecret, options); // this method is synchronous
+  //secrets.jwtSecret
 }
 module.exports = router;
