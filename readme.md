@@ -1,80 +1,28 @@
-user types:
-admin/moderator
-charity
-public
 
-state & actions:
-users
-  C - post /users
-  R - get /users
-      get /users/:id
-      get /users/type
-  U - put /users/:id
-  D - delete /users/:id
+## Authentication endpoints (public)
 
-inventory
-  C - post /users/:id/items
-  R - get /items/
-      get /items/type
+| Method    | Endpoint         | Required                                    | Optional     
+| -----     | ---------------- | ------------------------------------------  | ------------- |
+| POST      | /auth/register   | name, password, email, type (role), suspend | phone, address| | GET       | /auth/login      | email, password                             | N/A           |
 
-      get /users/:id/items
-      get /users/:id/items/type
-  U - put /users/:id/items/:id
-  D - delete /users/:id/items/:id
+Data details
+| field     |  data type       | addition al requirements
+| --------- | ---------------- | --------------------------------------------------- |
+| name      | string           | required, 128 max                                   |
+| password  | string           | required, 128 max, unique                           |
+| email     | string           | required, 128 max                                   |
+| type      | integer          | required,                                           |
+| phone     | string           | optional, 128 max, unique                           |
+| address   | string           | optional, 128 max                                   |
+| suspend   | boolean          | required,                                           |
 
-user fields:
-  id:
-  type: int 1/2/3 admin/public/charity
-  name: ""
-  email: varchar
-  password: varchar 128, 255
-  phone: optional
-  address: optional
-  social:
-  location_id:
-  suspend: false
+## Users endpoints (Auth)
 
-inventory fields:
-  id:
-  item: ""
-  details: ""
-  image_url:
+| Method    | Endpoint          | Notes                                      |  Auth         |
+| -----     | ----------------  | ------------------------------------------ | ------------- |
+| GET       | /api/user         | Get all users                              | registered    | | GET       | /api/user/:id     | Get user by id                             | registered    | 
+| GET       | /api/user/type/:id| Get users by type                          | registered    |
+|           |                   | 1=mod, 2=charity, 3=basic                  |               |
+| PUT       | /api/user/:id     | Edit user info (!suspend, !type)           | self          |
+| DELETE    | /api/user/:id     | Delete user                                | self, mod     |
 
-location fields:
-  id:
-  area:
-
-user_inv junction:
-  user_id
-  inv_id
-  inv_qty
-
-user_user junction:
-  user_id
-  follower_id
-  blocked_id
-
-user_location junction:
-  user_id
-  location_id
-
-
-all users can
-  create acct
-  delete their own acct
-  edit their own inventory/wishlist
-  edit their profile
-  search/get users & items
-  follow other users
-  block other users
-  report a user
-  message users
-  <!-- set up drive or garage giveaways -->
-  <!-- drive fields:
-  start time:
-  end time:
-  dropoff addy: -->
-
-mods can delete any user
-  can suspend any user
-  view user reports

@@ -5,7 +5,13 @@ module.exports = {
   getUserByEmail,
   saveUser,
   deleteUser,
-  updateUser
+  updateUser,
+  getUserByType
+}
+function getUserByType(type) {
+  return db('user')
+    .where({type})
+    .select('type', 'name', 'email', 'id', 'address', 'phone', 'suspend')
 }
 
 function getUserById(id) {
