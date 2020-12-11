@@ -1,5 +1,5 @@
 const express = require('express');
-const { validateUser, protected, modsOnly, selfOnly, modsOrSelf } = require('../validations');
+const { validateUser, protected, selfOnly, modsOrSelf } = require('../validations');
 const { deleteUser, updateUser, getUserByType } = require('../user/userModels');
 
 const router = express.Router();

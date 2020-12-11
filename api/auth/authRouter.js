@@ -3,11 +3,12 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const secrets = require('../../config/secrets');
 
+const { validateRegisterBody} = require('../validations');
 const { getUserByEmail, saveUser } = require('../user/userModels');
 
 const router = express.Router();
 
-router.post('/register', findUser, (req, res) => {
+router.post('/register', [findUser, validateRegisterBody], (req, res) => {
   if (res.user) {
     res.status(400).json('Email is already associated with another account.');
     //do this during validation??

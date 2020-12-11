@@ -4,6 +4,8 @@ const jwt = require('jsonwebtoken');
 
 module.exports = {
   validateUser,
+  validateRegisterBody,
+  validateEditBody,
   protected,
   modsOnly,
   selfOnly,
@@ -58,4 +60,30 @@ function validateUser(req, res, next) {
       console.log(err)
       res.status(500).json(`Error searching for user.`)
     })
+}
+
+function validateRegisterBody(req, res, next) {
+  return checkBody(req.body, res, next, ["name", "password", "type", "email", "suspend"]);
+}
+
+function validateEditBody(req, res, next) {
+  return checkBody(req.body, res, next, ["email", "password"]);
+}
+
+
+// helper function
+function checkBody(body, res, next, reqFields) {
+  const fieldsReceived = Object.keys(body);
+  const requiredFields = reqFields;
+  const missingFields = [];
+  for (let i of requiredFields) {
+    if (!fieldsReceived.includes(i)) {
+      missingFields.push(i);
+    }
+  }
+  if (missingFields.length > 0) {
+    res.status(400).json(`Input is missing fields: ${missingFields}.`)
+  } else {
+    next();
+  }
 }
